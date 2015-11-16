@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>KSPhotoBrowser.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>CFAA93E91BF0D0F700A9E116</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CFAA94021BF0D0F800A9E116</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CFAA940D1BF0D0F800A9E116</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

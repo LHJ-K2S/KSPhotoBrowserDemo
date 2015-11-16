@@ -1,0 +1,34 @@
+//
+//  PrefixHeader.pch
+//  KSPhotoBrowser
+//
+//  Created by lhj on 11/9/15.
+//  Copyright © 2015 lhj. All rights reserved.
+//
+
+//#ifndef _________PrefixHeader_pch
+#define _________PrefixHeader_pch
+
+#ifdef DEBUG
+#define KSLog(...) NSLog(__VA_ARGS__)
+#else
+#define KSLog(...)
+#endif
+
+#ifdef __OBJC__
+
+#define KSLogFunc K2SLog(@"%@",__func__)
+
+#define KSScreenW [UIScreen mainScreen].bounds.size.width
+#define KSScreenH [UIScreen mainScreen].bounds.size.height
+
+#define KSColor(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.9 alpha:1.0]
+#define KSRandomColor KSColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
+
+#define isPhoneMode         ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) ? (YES) : (NO)
+
+#import "KSConst.h"
+#import "UIImage+Image.h"
+#import "UIView+K2SFrame.h"
+
+#endif /* PrefixHeader_pch */

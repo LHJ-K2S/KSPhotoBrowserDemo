@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>a</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo1t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo2t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo3t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo4t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo5t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo6t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo7t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>photo8t</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>b</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>c</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>d</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>e</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>f</string>
+	</dict>
+</array>
+</plist>
