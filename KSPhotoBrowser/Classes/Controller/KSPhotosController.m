@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSMutableArray *selectedPhotos;
 @property (nonatomic, assign) BOOL showAnimated;
 @property (nonatomic, assign) BOOL selectState;
+@property (nonatomic, weak) UIButton *selectBtn;
+@property (nonatomic, weak) UIButton *deleteBtn;
+@property (nonatomic, weak) UIButton *saveBtn;
 
 @end
 
@@ -33,15 +36,8 @@
     [self setupCollectionView];
 //    [self setupNavigationItem];
     [self setupKSToolBar];
-    [self setupKSToolBar2];
+//    [self setupKSToolBar2];
 }
-
-//- (void)setupNavigationItem{
-//    
-//    
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"选择" style:UIBarButtonItemStyleDone target:self action:@selector(selectClick)];
-//    [self updateNavigationBar];
-//}
 
 - (void)setupCollectionView{
     if (!_collectionView) {
@@ -77,7 +73,7 @@
 - (void)setupKSToolBar{
     if (!_KSToolBar) {
         // 底部条
-        UIView *KSToolBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, KSScreenW, 44)];
+        UIView *KSToolBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 44, [UIScreen mainScreen].bounds.size.width, 44)];
         KSToolBar.backgroundColor = [UIColor colorWithRed:240 / 255.0 green:240 / 255.0 blue:240 / 255.0 alpha:1.0];
         _KSToolBar = KSToolBar;
         [self.view addSubview:KSToolBar];
@@ -86,18 +82,32 @@
         separateView.backgroundColor = [UIColor grayColor];
         [KSToolBar addSubview:separateView];
         
+        UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        selectBtn.frame = CGRectMake(10, 7, 50, 30);
+        [selectBtn addTarget:self action:@selector(selectBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [selectBtn setTitle:@"选择" forState:UIControlStateNormal];
+        [selectBtn setTitleColor:[UIColor colorWithRed:18/255.0 green:140/255.0 blue:227/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [selectBtn setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+        [selectBtn setBackgroundColor:[UIColor colorWithRed:200 / 255.0 green:200 / 255.0 blue:200 / 255.0 alpha:1.0]];
+        selectBtn.layer.cornerRadius = 3;
+        selectBtn.clipsToBounds = YES;
+        self.selectBtn = selectBtn;
+        [KSToolBar addSubview:selectBtn];
         
         UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        //    saveBtn.frame = CGRectMake(CScreenWidth / 2 - 15, 7, 30, 30);
-        saveBtn.frame = CGRectMake(10, 7, 30, 30);
-        [saveBtn setBackgroundImage:[UIImage imageNamed:@"还原"] forState:UIControlStateNormal];
+        saveBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - 15, 7, 30, 30);
+        [saveBtn setBackgroundImage:[UIImage imageNamed:@"保存"] forState:UIControlStateNormal];
         [saveBtn addTarget:self action:@selector(saveClick) forControlEvents:UIControlEventTouchUpInside];
+        saveBtn.enabled = NO;
+        self.saveBtn = saveBtn;
         [KSToolBar addSubview:saveBtn];
         
         UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         deleteBtn.frame = CGRectMake(KSScreenW - 40, 7, 30, 30);
         [deleteBtn setBackgroundImage:[UIImage imageNamed:@"删除"] forState:UIControlStateNormal];
         [deleteBtn addTarget:self action:@selector(delete) forControlEvents:UIControlEventTouchUpInside];
+        deleteBtn.enabled = NO;
+        self.deleteBtn = deleteBtn;
         [KSToolBar addSubview:deleteBtn];
     }
 }
@@ -115,7 +125,7 @@
         
         UIButton *selectAllBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         selectAllBtn.frame = CGRectMake(10, 10, 70, 30);
-        [selectAllBtn setTitle:@"全部选择" forState:UIControlStateNormal];
+        [selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
         selectAllBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         selectAllBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         [selectAllBtn setTitleColor:[UIColor colorWithRed:18/255.0 green:140/255.0 blue:227/255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -124,7 +134,7 @@
         selectAllBtn.layer.cornerRadius = 3;
         selectAllBtn.clipsToBounds = YES;
         selectAllBtn.contentEdgeInsets = UIEdgeInsetsMake(3, 8, 3, 8);
-        [selectAllBtn addTarget:self action:@selector(selectAllClick) forControlEvents:UIControlEventTouchUpInside];
+        [selectAllBtn addTarget:self action:@selector(selectAll) forControlEvents:UIControlEventTouchUpInside];
         [selectAllBtn sizeToFit];
         [KSToolBar2 addSubview:selectAllBtn];
         
@@ -137,7 +147,7 @@
         cancelButton.layer.cornerRadius = 3;
         cancelButton.clipsToBounds = YES;
         [cancelButton sizeToFit];
-        [cancelButton addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
+        [cancelButton addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 
@@ -146,6 +156,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
+    self.selectState = NO;
     if (self.showAnimated) {
         self.view.alpha = 0;
 //        self.KSToolBar.frame = CGRectMake(0, self.view.bounds.size.height - 44, self.view.bounds.size.width, 44);
@@ -185,7 +196,18 @@
     }
 }
 
-- (void)selectAllClick{
+- (void)selectBtnClick{
+    if ([self.selectBtn.titleLabel.text isEqualToString:@"选择"]) {
+        [self longPress];
+    }else if ([self.selectBtn.titleLabel.text isEqualToString:@"全选"]){
+        [self selectAll];
+    }else if ([self.selectBtn.titleLabel.text isEqualToString:@"取消"]){
+        [self cancelAll];
+    }
+    
+}
+
+- (void)selectAll{
     
     [self.selectedPhotos removeAllObjects];
     for (KSPhoto *photo in self.photos) {
@@ -193,33 +215,27 @@
         photo.selectStateYES = YES;
     }
     [self.selectedPhotos addObjectsFromArray:self.photos];
-    [UIView animateWithDuration:0.15 animations:^{
-        self.KSToolBar2.frame = CGRectMake(0, self.view.bounds.size.height, KSScreenW, 44);
-    }completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.15 animations:^{
-            self.KSToolBar.frame = CGRectMake(0, self.view.bounds.size.height - 44, KSScreenW, 44);
-        }];
-    }];
-    
+    self.selectState = YES;
+    [self.selectBtn setTitle:@"取消" forState:UIControlStateNormal];
     [self.collectionView reloadData];
 }
 
-- (void)cancelClick{
+- (void)cancelAll{
     [self.selectedPhotos removeAllObjects];
-    [UIView animateWithDuration:0.15 animations:^{
-        self.KSToolBar2.frame = CGRectMake(0, self.view.bounds.size.height, KSScreenW, 44);
-    }completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.15 animations:^{
-            self.KSToolBar.frame = CGRectMake(0, self.view.bounds.size.height - 44, KSScreenW, 44);
-        }];
-    }];
+    for (KSPhoto *photo in self.photos) {
+        photo.selectState = NO;
+        photo.selectStateYES = NO;
+    }
+    self.selectState = NO;
+    [self.selectBtn setTitle:@"选择" forState:UIControlStateNormal];
     [self.collectionView reloadData];
 }
 
 - (void)saveClick{
-    [SVProgressHUD show];
+    
     
     if (self.selectedPhotos.count) {
+        [SVProgressHUD show];
         [self savePhoto];
     }
     
@@ -229,7 +245,7 @@
     if (self.selectedPhotos.count) {
         KSPhoto *photo = self.selectedPhotos[0];
 //        UIImage *photo = [UIImage imageWithContentsOfFile:photo.fullName];
-        UIImage *image = [UIImage imageNamed:photo.name];
+        UIImage *image = photo.image;
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }else{
         [SVProgressHUD showSuccessWithStatus:@"保存成功！"];
@@ -256,7 +272,6 @@
         if (self.selectedPhotos.count) {
             [self deletePhotoWithPhotoArray:self.selectedPhotos];
         }
-        
     }
 }
 
@@ -281,6 +296,7 @@
         [self.collectionView reloadData];
         
         [self updateNavigationBar];
+        [self.view layoutIfNeeded];
         
 //        [self selectClick];
         //        if (self.photoModels.count == 0){
@@ -295,11 +311,15 @@
 
 - (void)longPress{
     [self.selectedPhotos removeAllObjects];
+    for (KSPhoto *photo in self.photos) {
+        photo.selectState = YES;
+    }
     self.selectState = YES;
     [self.collectionView reloadData];
-    [UIView animateWithDuration:0.25 animations:^{
-        self.KSToolBar2.frame = CGRectMake(0, self.view.bounds.size.height - 44, self.view.bounds.size.width, 44);
-    }];
+    [self.selectBtn setTitle:@"全选" forState:UIControlStateNormal];
+//    [UIView animateWithDuration:0.25 animations:^{
+//        self.KSToolBar.frame = CGRectMake(0, self.view.bounds.size.height - 44, self.view.bounds.size.width, 44);
+//    }];
 }
 
 #pragma mark - 数据方法
@@ -326,10 +346,11 @@
     
     KSPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     KSPhoto *photo = self.photos[indexPath.row];
+    
     cell.photo = photo;
     cell.photoView.contentMode = UIViewContentModeScaleAspectFill;
     
-    photo.selectState = self.selectState;
+    
 
     return cell;
     
@@ -378,22 +399,17 @@
                 animatView.hidden = YES;
             }];
 
-            
-            
+
         }];
-        
-        
-        
-        
         
         
     }else{
         // 如果是浏览小图的时候点击cell，那么改模型为selected
         KSPhotoCell *cell = (KSPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//        cell.selectStateYES = !cell.selectStateYES;
         
         KSPhoto *photomodel = self.photos[indexPath.row];
         photomodel.selectStateYES = !photomodel.selectStateYES;
+        // 来到set方法才会改变cell的coverView
         cell.photo = photomodel;
         if (photomodel.selectStateYES) {
             [self.selectedPhotos addObject:photomodel];
@@ -402,23 +418,15 @@
         }
         
         
-        // 如果有cell被选中，那么显示bottomView
+        // 如果有cell被选中，
         if (self.selectedPhotos.count) {
-            [UIView animateWithDuration:0.15 animations:^{
-                self.KSToolBar2.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 44);
-            }completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.15 animations:^{
-                    self.KSToolBar.frame = CGRectMake(0, self.view.bounds.size.height - 44, self.view.bounds.size.width, 44);
-                }];
-            }];
-        }else{// 没有cell被选中，那么显示anotherBottomView
-            [UIView animateWithDuration:0.15 animations:^{
-                self.KSToolBar.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 44);
-            }completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.15 animations:^{
-                    self.KSToolBar2.frame = CGRectMake(0, self.view.bounds.size.height - 44, self.view.bounds.size.width, 44);
-                }];
-            }];
+            [self.selectBtn setTitle:@"取消" forState:UIControlStateNormal];
+            self.saveBtn.enabled = YES;
+            self.deleteBtn.enabled = YES;
+        }else{// 没有cell被选中，
+            [self.selectBtn setTitle:@"全选" forState:UIControlStateNormal];
+            self.saveBtn.enabled = NO;
+            self.deleteBtn.enabled = NO;
         }
     }
 }

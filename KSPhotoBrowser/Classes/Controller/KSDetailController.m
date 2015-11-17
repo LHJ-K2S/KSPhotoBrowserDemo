@@ -72,10 +72,20 @@ static NSInteger const detailViewPadding = 20;
         separateView.backgroundColor = [UIColor grayColor];
         [bottomView addSubview:separateView];
         
+        UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        backBtn.frame = CGRectMake(10, 7, 50, 30);
+        [backBtn addTarget:self action:@selector(collectionViewTap) forControlEvents:UIControlEventTouchUpInside];
+        [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+        [backBtn setTitleColor:[UIColor colorWithRed:18/255.0 green:140/255.0 blue:227/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [backBtn setTitleColor:[UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0] forState:UIControlStateHighlighted];
+        [backBtn setBackgroundColor:[UIColor colorWithRed:200 / 255.0 green:200 / 255.0 blue:200 / 255.0 alpha:1.0]];
+        backBtn.layer.cornerRadius = 3;
+        backBtn.clipsToBounds = YES;
+        [bottomView addSubview:backBtn];
         
         UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        saveBtn.frame = CGRectMake(10, 7, 30, 30);
-        [saveBtn setBackgroundImage:[UIImage imageNamed:@"还原"] forState:UIControlStateNormal];
+        saveBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - 15, 7, 30, 30);
+        [saveBtn setBackgroundImage:[UIImage imageNamed:@"保存"] forState:UIControlStateNormal];
         [saveBtn addTarget:self action:@selector(saveClick) forControlEvents:UIControlEventTouchUpInside];
         [bottomView addSubview:saveBtn];
         
@@ -130,7 +140,7 @@ static NSInteger const detailViewPadding = 20;
     
     if (self.currentIndex) {
         KSPhoto *photo = self.photos[self.currentIndex];
-        UIImage *image = [UIImage imageNamed:photo.name];
+        UIImage *image = photo.image;
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
 }

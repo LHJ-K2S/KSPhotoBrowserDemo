@@ -23,7 +23,7 @@
 		CF5D30CF1BF21DC6002DEB1C /* photo7t.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF5D30C11BF21DC6002DEB1C /* photo7t.jpg */; };
 		CF5D30D01BF21DC6002DEB1C /* photo8t.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF5D30C21BF21DC6002DEB1C /* photo8t.jpg */; };
 		CF997E8E1BF5CF43002D59C7 /* KSToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CF997E8D1BF5CF43002D59C7 /* KSToolBar.m */; };
-		CF997ED41BF5DDCE002D59C7 /* 狮子.png in Resources */ = {isa = PBXBuildFile; fileRef = CF997ED31BF5DDCE002D59C7 /* 狮子.png */; };
+		CF9FCA3B1BFB13FF005A69FF /* knockout_00.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CF9FCA3A1BFB13FF005A69FF /* knockout_00.jpg */; };
 		CFAA94081BF0D0F800A9E116 /* KSPhotoBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CFAA94071BF0D0F800A9E116 /* KSPhotoBrowserTests.m */; };
 		CFAA94131BF0D0F800A9E116 /* KSPhotoBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CFAA94121BF0D0F800A9E116 /* KSPhotoBrowserUITests.m */; };
 		CFAA94691BF0D68900A9E116 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFAA945E1BF0D68900A9E116 /* AppDelegate.m */; };
@@ -81,7 +81,7 @@
 		CF5D30C21BF21DC6002DEB1C /* photo8t.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo8t.jpg; sourceTree = "<group>"; };
 		CF997E8C1BF5CF43002D59C7 /* KSToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSToolBar.h; sourceTree = "<group>"; };
 		CF997E8D1BF5CF43002D59C7 /* KSToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSToolBar.m; sourceTree = "<group>"; };
-		CF997ED31BF5DDCE002D59C7 /* 狮子.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "狮子.png"; sourceTree = "<group>"; };
+		CF9FCA3A1BFB13FF005A69FF /* knockout_00.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = knockout_00.jpg; sourceTree = "<group>"; };
 		CFAA93EA1BF0D0F700A9E116 /* KSPhotoBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KSPhotoBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFAA94031BF0D0F800A9E116 /* KSPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KSPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFAA94071BF0D0F800A9E116 /* KSPhotoBrowserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KSPhotoBrowserTests.m; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@
 		CFAA94B91BF0DEC500A9E116 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				CF997ED31BF5DDCE002D59C7 /* 狮子.png */,
+				CF9FCA3A1BFB13FF005A69FF /* knockout_00.jpg */,
 				CF5D30B51BF21DC6002DEB1C /* a.jpg */,
 				CF5D30B61BF21DC6002DEB1C /* b.jpg */,
 				CF5D30B71BF21DC6002DEB1C /* c.jpg */,
@@ -436,7 +436,6 @@
 				CFAA94B81BF0DE3900A9E116 /* Images.xcassets in Resources */,
 				CF5D30CC1BF21DC6002DEB1C /* photo4t.jpg in Resources */,
 				CFAA94791BF0D75600A9E116 /* photos.plist in Resources */,
-				CF997ED41BF5DDCE002D59C7 /* 狮子.png in Resources */,
 				CF5D30C31BF21DC6002DEB1C /* a.jpg in Resources */,
 				CFAA94731BF0D6E000A9E116 /* LaunchScreen.storyboard in Resources */,
 				CF5D30CB1BF21DC6002DEB1C /* photo3t.jpg in Resources */,
@@ -446,6 +445,7 @@
 				CF5D30CE1BF21DC6002DEB1C /* photo6t.jpg in Resources */,
 				CFAA94F51BF173B800A9E116 /* SVProgressHUD.bundle in Resources */,
 				CF5D30C61BF21DC6002DEB1C /* d.jpg in Resources */,
+				CF9FCA3B1BFB13FF005A69FF /* knockout_00.jpg in Resources */,
 				CF5D30C91BF21DC6002DEB1C /* photo1t.jpg in Resources */,
 				CF5D30CD1BF21DC6002DEB1C /* photo5t.jpg in Resources */,
 				CF5D30C41BF21DC6002DEB1C /* b.jpg in Resources */,
